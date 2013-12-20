@@ -1,0 +1,26 @@
+# By default, auto-detect text files for normalization
+*           text=auto
+
+# Binary files should not be normalized
+*.jpg       binary
+*.png       binary
+*.gif       binary
+*.ico       binary
+*.eot       binary
+*.svg       binary
+*.ttf       binary
+*.woff      binary
+
+# Text files should be normalized
+*.js        text
+*.html      text
+*.css       text
+*.json      text
+*.xml       text
+
+# Project settings
+.gitignore      text
+.gitattributes  text
+.bowerrc        text
+.editorconfig   text
+.jshintrc       text
