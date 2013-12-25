@@ -1,32 +1,60 @@
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12" style="background-color: cornflowerblue">
-      <p class>Hey world! Here are some awesome things:</p>
-      <ul>
-        <li ng-repeat="thing in awesomeThings">
-          {{thing}}
-        </li>
+<!-- Navigation bar -->
+<div class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">reddit keyword search</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#about">About</a></li>
       </ul>
     </div>
   </div>
+</div>
+
+<!-- Main content -->
+<div class="container">
   <div class="row">
-    <div class="col-md-6" style="background-color: limegreen">
-      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
 
-      <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
+    <section ng-controller="MainCtrl" id="feeds-wrap" class="col-xs-12">
 
-      <p>Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.</p>
+      <div class="feed panel panel-default">
+        <div class="panel-heading">
+          <button type="button" class="btn btn-default btn-xs" title="Delete feed">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+          <button type="button" class="btn btn-default btn-xs" title="Collapse feed">
+            <span class="glyphicon glyphicon-minus"></span>
+          </button>
+          <button type="button" class="btn btn-default btn-xs" title="Change options for feed">
+            <span class="glyphicon glyphicon-cog"></span>
+          </button>
+          <h3 class="panel-title">/r/subredditName</h3>
+        </div>
+        <ul class="feed-list list-group">
+          <li ng-repeat="sub in subs" class="list-group-item">
+            <span class="badge label-success">new</span>
+            {{sub.data.title}}
+            <!-- <p>{{sub.data.selftext}}</p> -->
+          </li>
+        </ul>
+      </div>
 
-      <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante.</p>
-    </div>
-    <div class="col-md-6" style="background-color: indianred">
-      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+    </section>
 
-      <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
-
-      <p>Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.</p>
-
-      <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante.</p>
-    </div>
   </div>
 </div>
+
+<!-- Footer information -->
+<footer>
+  <div class="container">
+    <p class="text-muted pull-right">Created by Alex Nakorn</p>
+  </div>
+</footer>

@@ -1,10 +1,11 @@
 'use strict';
 
-angular.module('redditKeywordAlertApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+var rkaControllers = angular.module('rkaControllers', [
+  'rkaServices'
+]);
+
+rkaControllers.controller('MainCtrl', ['$scope', '$routeParams', 'Reddit', function ($scope, $routeParams, Reddit) {
+  Reddit.get({ subreddit: 'AdoptMyVillager', type: 'new' }, function(result) {
+    $scope.subs = result.data.children;
   });
+}]);

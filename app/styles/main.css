@@ -1,5 +1,4 @@
 footer {
-  margin-top: 20px;
   height: 60px;
   background-color: #f5f5f5;
   border-top: 1px solid #e7e7e7;
@@ -8,4 +7,37 @@ footer {
     padding-top: 20px;
     padding-bottom: 20px;
     margin: 0;
+  }
+.btn-default {
+  border: none;
+  color: #777777;
+  background: none;
+}
+.badge.label-success {
+  background-color: #5cb85c;
+}
+
+.feed > .panel-heading {
+  overflow: hidden;
+  padding: 0;
+}
+  .feed > .panel-heading > .panel-title {
+    padding: 10px 15px;
+  }
+  .feed > .panel-heading > .btn-default {
+    float: right;
+    width: 37px;
+    height: 37px;
+  }
+.feed-list {
+  background-color: #d4e3f2;
+}
+  .feed-list > .list-group-item {
+    background: none;
+  }
+  .feed-list > li:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.59);
+  }
+  .feed-list p {
+    margin: 1em;
   }

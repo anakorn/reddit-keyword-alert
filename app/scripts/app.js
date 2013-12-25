@@ -1,12 +1,14 @@
 'use strict';
 
-angular.module('redditKeywordAlertApp', [
+angular.module('rka', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'rkaServices',
+  'rkaControllers'
 ])
-  .config(function ($routeProvider) {
+  .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -15,4 +17,4 @@ angular.module('redditKeywordAlertApp', [
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }]);
