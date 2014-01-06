@@ -1,11 +1,12 @@
 'use strict';
 
-var rkaControllers = angular.module('rkaControllers', [
-  'rkaServices'
-]);
+angular.module('rkaControllers')
 
-rkaControllers.controller('MainCtrl', ['$scope', '$routeParams', 'Reddit', function ($scope, $routeParams, Reddit) {
-  Reddit.get({ subreddit: 'AdoptMyVillager', type: 'new' }, function(result) {
-    $scope.subs = result.data.children;
+.controller('MainCtrl', ['$scope', 'Reddit', 'UserData', function ($scope, Reddit, UserData) {
+  $scope.feeds = UserData.feeds;
+  angular.forEach(UserData.feeds, function(feed) {
+    Reddit.get({ subreddit: feed.sr, type: feed.type }, function(result) {
+      feed.submissions = result.data.children;
+    });
   });
 }]);

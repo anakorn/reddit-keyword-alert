@@ -1,5 +1,13 @@
 'use strict';
 
+angular.module('rkaServices', [
+  'ngResource'
+]);
+
+angular.module('rkaControllers', [
+  'rkaServices'
+]);
+
 angular.module('rka', [
   'ngCookies',
   'ngResource',
@@ -8,13 +16,13 @@ angular.module('rka', [
   'rkaServices',
   'rkaControllers'
 ])
-  .config(['$routeProvider', function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  }]);
+
+.config(['$routeProvider', function ($routeProvider) {
+  $routeProvider
+    .when('/', {
+      templateUrl: 'views/main.html',
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
+}]);

@@ -1,13 +1,20 @@
 'use strict';
 
-var rkaServices = angular.module('rkaServices', [
-  'ngResource'
-]);
+angular.module('rkaServices')
 
-rkaServices.factory('Reddit', ['$resource',
-  function($resource) {
-    return $resource('http://www.reddit.com/r/:subreddit/:type.json', {}, {
-      query: { method: 'GET', isArray: true }
-    });
-  }
-]);
+.factory('Reddit', ['$resource', function($resource) {
+  return $resource('http://www.reddit.com/r/:subreddit/:type.json');
+}])
+
+.service('UserData', function() {
+  this.feeds = [
+    {
+      sr: 'adoptMyVillager',
+      type: 'new'
+    },
+    {
+      sr: 'nba',
+      type: 'hot'
+    }
+  ];
+});

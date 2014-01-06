@@ -1,22 +1,45 @@
-footer {
-  height: 60px;
-  background-color: #f5f5f5;
-  border-top: 1px solid #e7e7e7;
-}
-  footer p {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin: 0;
-  }
-.btn-default {
+/* Bootstrap modifications */
+.navbar-default {
   border: none;
-  color: #777777;
-  background: none;
+  background-color: #428bca;
 }
-.badge.label-success {
+  .navbar-default .navbar-brand {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav > li > a {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #ffffff;
+    background-color: #3276b1;
+  }
+  .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover {
+    color: #428bca;
+  }
+  .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-toggle {
+    border: none;
+  }
+  .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background-color: #3276b1;
+  }
+  .navbar-default .navbar-collapse {
+    border: none;
+  }
+.navbar-nav {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.badge-success {
   background-color: #5cb85c;
 }
+/* !Bootstrap modifications */
 
+body {
+  background-color: #e7e7e7;
+}
 .feed > .panel-heading {
   overflow: hidden;
   padding: 0;
@@ -24,20 +47,31 @@ footer {
   .feed > .panel-heading > .panel-title {
     padding: 10px 15px;
   }
-  .feed > .panel-heading > .btn-default {
-    float: right;
+.feed-menu {
+  float: right;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+  .feed-menu > .btn {
+    float: left;
     width: 37px;
     height: 37px;
+    border: none;
   }
-.feed-list {
+.feed-options {
+  padding: 1em;
+  background-color: #93bee4;
+}
+.feed-item-list {
   background-color: #d4e3f2;
 }
-  .feed-list > .list-group-item {
+  .feed-item-list > .list-group-item {
     background: none;
   }
-  .feed-list > li:nth-child(even) {
+  .feed-item-list > li:nth-child(odd) {
     background-color: rgba(255, 255, 255, 0.59);
   }
-  .feed-list p {
+  .feed-item-list p {
     margin: 1em;
   }
