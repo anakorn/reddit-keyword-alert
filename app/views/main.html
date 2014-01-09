@@ -1,3 +1,4 @@
+<div id="page-wrap">
 <!-- Navigation bar -->
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">
@@ -8,59 +9,100 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">reddit keyword search</a>
+      <a class="navbar-brand" href="#">rka</a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#about">Add Feed...</a></li>
       </ul>
+      <form class="navbar-form navbar-right" ng-controller="UserCtrl">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Subreddit name" ng-model="newFeedName" required>
+        </div>
+        <button type="submit" class="btn btn-default" ng-click="user.feeds.addFeed(newFeedName)">Add new feed</button>
+      </form>
     </div>
   </div>
 </div>
 
 <!-- Main content -->
-<div class="container">
+<div class="container" ng-controller="MainCtrl">
   <div class="row">
 
-    <section ng-controller="MainCtrl" id="feeds-wrap" class="col-xs-12">
-      <div ng-repeat="feed in feeds" class="feed panel panel-primary">
+    <section id="messages-wrap" class="col-xs-12">
+      <div class="alert alert-warning" ng-show="feeds.isEmpty()">
+        <p>It looks like you have no Reddit feeds yet!</p>
+        <p>Click the "Add new feed" button above to add a new feed.</p>
+      </div>
+    </section>
+
+<!--     <section class="col-xs-12 col-sm-2">
+      <div id="feeds-nav" class="list-group">
+        <a ng-repeat="feed in feeds" href="#" class="list-group-item">{{feed.sr}}</a>
+      </div>
+    </section>
+ -->
+    <section id="feeds-wrap" class="col-xs-12">
+      <div ng-repeat="feed in feeds" id="{{feed.sr}}_f" class="feed panel panel-primary">
 
         <div class="panel-heading">
           <ul class="feed-menu">
-            <button type="button" class="btn btn-primary btn-xs" title="Change feed options">
+            <button type="button" class="btn btn-primary btn-xs" ng-class="{active: feed.optionsShown}" title="Change feed options" ng-click="feed.toggleOptionsShown()">
               <span class="glyphicon glyphicon-cog"></span>
             </button>
-            <button type="button" class="btn btn-primary btn-xs" title="Collapse feed">
+            <button type="button" class="btn btn-primary btn-xs" title="Collapse feed" ng-click="feed.toggleExpanded()" ng-show="feed.expanded">
               <span class="glyphicon glyphicon-minus"></span>
             </button>
-            <button type="button" class="btn btn-primary btn-xs" title="Expand feed">
+            <button type="button" class="btn btn-primary btn-xs" title="Expand feed" ng-click="feed.toggleExpanded()" ng-show="!feed.expanded">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
-            <button type="button" class="btn btn-primary btn-xs" title="Delete feed">
+            <button type="button" class="btn btn-primary btn-xs" title="Delete feed" ng-click="user.feeds.deleteFeed(feed)">
               <span class="glyphicon glyphicon-remove"></span>
             </button>
           </ul>
           <h3 class="panel-title">
-            <a href="http://reddit.com/r/{{feed.sr}}">/r/{{feed.sr}}</a>
+            <a href="http://reddit.com/r/{{feed.sr}}">{{feed.sr}}</a>
           </h3>
         </div>
 
-        <div class="feed-options">
+        <div class="feed-options" ng-show="feed.optionsShown">
           <form>
-            <input type='text' ng-model='submissionSearch'>
-            <input type='submit'>
+            <div class="form-group">
+              <label>
+                Submission type: 
+                <select type="checkbox" class="form-control" ng-model="feed.type">
+                  <option>new</option>
+                  <option>hot</option>
+                  <option>top</option>
+                  <option>rising</option>
+                  <option>controversial</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                Filter by title: 
+                <input type="text" class="form-control" ng-model="titleSearchText">
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                Show number of comments: 
+                <input type="checkbox" ng-model="feed.numCommentsShown">
+              </label>
+            </div>
           </form>
         </div>
 
-        <ul class="feed-item-list list-group">
-          <li ng-repeat="sub in feed.submissions | filter:submissionSearch" class="list-group-item">
-            <span class="badge badge-success">new</span>
-            <a href={{sub.data.url}}>{{sub.data.title}}</a>
-            <!-- <p>{{sub.data.selftext}}</p> -->
-          </li>
-        </ul>
+        <div class="feed-item-list list-group" ng-show="feed.expanded">
+            <a href={{sub.data.url}} ng-repeat="sub in submissions[feed.sr] | filter:{data.title: titleSearchText}" class="list-group-item">
+              {{sub.data.title}}
+              <!-- <p>{{sub.data.selftext}}</p> -->
+              <span class="badge" ng-show="feed.numCommentsShown">{{sub.data.num_comments}}</span>
+              <span class="badge badge-success">new</span>
+            </a>
+        </div>
 
       </div>
     </section>
@@ -76,4 +118,5 @@
       <a href="http://github.com/rainakorn">me</a> &copy; 2013
     </p>
   </footer>
+</div>
 </div>

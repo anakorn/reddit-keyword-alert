@@ -25,12 +25,7 @@
   .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
     background-color: #3276b1;
   }
-  .navbar-default .navbar-collapse {
-    border: none;
-  }
-.navbar-nav {
-  margin-top: 0;
-  margin-bottom: 0;
+.feed-item-list > a.list-group-item:hover, .feed-item-list > a.list-group-item:focus {
 }
 .badge-success {
   background-color: #5cb85c;
@@ -69,9 +64,6 @@ body {
   .feed-item-list > .list-group-item {
     background: none;
   }
-  .feed-item-list > li:nth-child(odd) {
+  .feed-item-list > a:nth-child(odd) {
     background-color: rgba(255, 255, 255, 0.59);
-  }
-  .feed-item-list p {
-    margin: 1em;
   }
