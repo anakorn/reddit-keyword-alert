@@ -2,14 +2,23 @@
 
 angular.module('rkaServices')
 
-.factory('Reddit', ['$resource', function($resource) {
-  return $resource('http://www.reddit.com/r/:subreddit/:type.json');
+.factory('FeedUpdater', ['$resource', function($resource) {
+  return function(feed) {
+    var redditApi = $resource('http://www.reddit.com/r/:subreddit/:type.json');
+    redditApi.get({ subreddit: feed.sr, type: feed.type },
+      function(result) {
+        feed.submissions = result.data.children;
+        console.log('UPDATED:', feed.sr);
+      }
+    );
+  };
 }])
 
 .service('UserData', function() {
   function Feed(sr, type, cfg) {
     this.sr = sr;
     this.type = type || 'new';
+    this.submissions = {};
 
     cfg = cfg || {};
     this.expanded = (cfg.expanded !== undefined) ? cfg.expanded : true;
@@ -34,7 +43,7 @@ angular.module('rkaServices')
       optionsShown: false,
       numCommentsShown: true
     }),
-    new Feed('nba', 'hot')
+    new Feed('gamedeals', 'new')
   ];
 
   this.feeds.isEmpty = function() {

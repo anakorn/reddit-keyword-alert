@@ -96,7 +96,7 @@
         </div>
 
         <div class="feed-item-list list-group" ng-show="feed.expanded">
-            <a href={{sub.data.url}} ng-repeat="sub in submissions[feed.sr] | filter:{data.title: titleSearchText}" class="list-group-item">
+            <a href={{sub.data.url}} ng-repeat="sub in feed.submissions | filter:{data.title: titleSearchText}" class="list-group-item">
               {{sub.data.title}}
               <!-- <p>{{sub.data.selftext}}</p> -->
               <span class="badge" ng-show="feed.numCommentsShown">{{sub.data.num_comments}}</span>
