@@ -2,18 +2,12 @@
 
 angular.module('rkaControllers')
 
-.controller('UserCtrl', ['$scope', 'UserData', function($scope, UserData) {
-  $scope.user = UserData;
-  $scope.feeds = UserData.feeds;
-}])
-
-.controller('MainCtrl', ['$scope', 'FeedUpdater', 'UserData', function($scope, FeedUpdater, UserData) {
-  $scope.user = UserData;
-  $scope.feeds = UserData.feeds;
-
-  angular.forEach(UserData.feeds, function(feed) {
-    $scope.$watch(function() { return feed.sr; }, function(updatedFeed) {
-      FeedUpdater(feed);
-    }, true);
-  });
+// Hooks user's feeds to the main page
+.controller('MainCtrl', ['$scope', '$interval', 'Feeds', function($scope, $interval, Feeds) {
+  $scope.feeds = Feeds;
+  $interval(function() {
+    angular.forEach($scope.feeds.getAll(), function(feed) {
+      feed.update();
+    });
+  }, 10000);
 }]);

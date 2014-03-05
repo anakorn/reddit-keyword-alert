@@ -1,30 +1,60 @@
 'use strict';
 
-describe('Controller: MainCtrl', function() {
+describe('rka controllers', function() {
 
   // load the controller's module
-  beforeEach(module('rkaServices'));
+  beforeEach(module('rkaControllers'));
 
-  var MainCtrl,
-    scope;
+  var scope;
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope) {
-    scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
-      $scope: scope
+  xdescribe('MainCtrl', function() {
+    var MainCtrl;
+
+    // Initialize the controller and a mock scope
+    beforeEach(inject(function($controller, $rootScope) {
+      scope = $rootScope.$new();
+      MainCtrl = $controller('MainCtrl', {
+        $scope: scope
+      });
+    }));
+
+  });
+
+  describe('UserCtrl', function() {
+    var UserCtrl;
+
+    // Initialize the controller and a mock scope
+    beforeEach(inject(function($controller, $rootScope) {
+      scope = $rootScope.$new();
+      UserCtrl = $controller('UserCtrl', {
+        $scope: scope
+      });
+    }));
+
+    it('should allow adding feeds', function() {
+      scope.addFeed('pugs');
+      expect(scope.feeds.size()).toBe(1);
     });
-  }));
 
-  // it('should retrieve 25 reddit submissions asynchronously', function() {
+  });
 
-  //   waitsFor(function() {
-  //     return typeof(scope.subs) != 'undefined';
-  //   }, 'scope.subs should be defined', 5000);
 
-  //   runs(function() {
-  //     expect(scope.subs.length).toBe(25);
-  //   });
 
+  // it('should reflect changes in Feeds', function() {
+  // Feeds.add('GameDeals', {
+  //   type: 'new'
   // });
+
+  // Feeds.add('adoptMyVillager', {
+  //   type: 'new',
+  //   optionsShown: false,
+  //   expanded: false,
+  //   numCommentsShown: true
+  // });
+
+  //   expect(scope.feeds.size()).toBe(2);
+  //   scope.feeds.add('pugs', {});
+  //   expect(scope.feeds.size()).toBe(3);
+  // });
+
 });

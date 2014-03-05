@@ -1,0 +1,41 @@
+<div class="panel-heading">
+  <ul class="feed-menu">
+    <button type="button" class="btn btn-primary btn-xs" ng-class="{active: feed.options.optionsShown}" title="Change feed options" ng-click="feed.options.toggleOptionsShown()">
+      <span class="glyphicon glyphicon-cog"></span>
+    </button>
+    <button type="button" class="btn btn-primary btn-xs" title="Collapse feed" ng-click="feed.options.toggleExpand()" ng-show="feed.options.expanded">
+      <span class="glyphicon glyphicon-minus"></span>
+    </button>
+    <button type="button" class="btn btn-primary btn-xs" title="Expand feed" ng-click="feed.options.toggleExpand()" ng-show="!feed.options.expanded">
+      <span class="glyphicon glyphicon-plus"></span>
+    </button>
+    <button type="button" class="btn btn-primary btn-xs" title="Delete feed" ng-click="deleteFeed()">
+      <span class="glyphicon glyphicon-remove"></span>
+    </button>
+  </ul>
+  <h3 class="panel-title">
+    <a href="http://reddit.com/r/{{feed.sr}}">{{feed.sr}}</a> sorted by {{feed.options.type}}
+  </h3>
+</div>
+
+<div class="feed-options" ng-show="feed.options.optionsShown">
+  <div class="btn-group" data-toggle="buttons">
+    <button type="button" class="btn btn-default" ng-model="feed.options.type" btn-radio="'new'">new</button>
+    <button type="button" class="btn btn-default" ng-model="feed.options.type" btn-radio="'hot'">hot</button>
+    <button type="button" class="btn btn-default" ng-model="feed.options.type" btn-radio="'top'">top</button>
+    <button type="button" class="btn btn-default" ng-model="feed.options.type" btn-radio="'rising'">rising</button>
+    <button type="button" class="btn btn-default" ng-model="feed.options.type" btn-radio="'controversial'">controversial</button>
+  </div>
+  <button class="btn btn-default" type="button" ng-model="feed.options.numCommentsShown" btn-checkbox>
+    show number of comments
+  </button>
+</div>
+
+<div class="feed-item-list list-group" ng-show="feed.options.expanded">
+    <a href={{sub.data.url}} ng-repeat="sub in feed.submissions | filter:{data.title: titleSearchText}" class="list-group-item">
+      {{sub.data.title}}
+      <!-- <p>{{sub.data.selftext}}</p> -->
+      <span class="badge" ng-show="feed.options.numCommentsShown">{{sub.data.num_comments}}</span>
+      <!-- <span class="badge badge-success">new</span> -->
+    </a>
+</div>

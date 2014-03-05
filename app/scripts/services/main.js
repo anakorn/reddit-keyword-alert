@@ -2,10 +2,10 @@
 
 angular.module('rkaServices')
 
-.factory('FeedUpdater', ['$resource', function($resource) {
+.factory('UpdateFeed', ['$resource', function($resource) {
   return function(feed) {
     var redditApi = $resource('http://www.reddit.com/r/:subreddit/:type.json');
-    redditApi.get({ subreddit: feed.sr, type: feed.type },
+    redditApi.get({ subreddit: feed.sr, type: feed.options.type },
       function(result) {
         feed.submissions = result.data.children;
         console.log('UPDATED:', feed.sr);
@@ -14,60 +14,114 @@ angular.module('rkaServices')
   };
 }])
 
-.service('UserData', function() {
-  function Feed(sr, type, cfg) {
+.service('Feeds', ['UpdateFeed', function(UpdateFeed) {
+
+  /**********************
+      PRIVATE MEMBERS
+  **********************/
+
+  // Feed class constructor
+  function Feed(sr, options) {
+    this.submissions = [];
     this.sr = sr;
-    this.type = type || 'new';
-    this.submissions = {};
 
-    cfg = cfg || {};
-    this.expanded = (cfg.expanded !== undefined) ? cfg.expanded : true;
-    this.optionsShown = (cfg.optionsShown !== undefined) ? cfg.optionsShown : false;
-    this.numCommentsShown = (cfg.numCommentsShown !== undefined) ? cfg.numCommentsShown : false;
+    // Set default options (if not already set)
+    this.options = options || {};
+    this.options.type = this.options.type !== undefined ? this.options.type : 'new';
+    this.options.optionsShown = this.options.optionsShown !== undefined ? this.options.optionsShown : false;
+    this.options.expanded = this.options.expanded !== undefined ? this.options.expanded : true;
+    this.options.numCommentsShown = this.options.numCommentsShown !== undefined ? this.options.numCommentsShown : false;
 
-    this.toggleExpanded = function() {
+    // Toggle expansion of this feed
+    this.options.toggleExpand = function() {
       if (this.expanded) {
         this.optionsShown = false;
       }
       this.expanded = !this.expanded;
     };
 
-    this.toggleOptionsShown = function() {
+    // Toggle whether options are shown for this feed
+    this.options.toggleOptionsShown = function() {
       this.optionsShown = !this.optionsShown;
+    };
+
+    this.update = function() {
+      UpdateFeed(this);
     };
   }
 
-  this.feeds = [
-    new Feed('adoptMyVillager', 'new', {
-      expanded: false,
-      optionsShown: false,
-      numCommentsShown: true
-    }),
-    new Feed('gamedeals', 'new')
-  ];
+  function feedExists(sr) {
+    var feedsFound = feeds.filter(function(feed) {
+      return feed.sr === sr;
+    });
+    return feedsFound.length !== 0;
+  }
 
-  this.feeds.isEmpty = function() {
-    return this.length === 0;
+  // List of Feed objects to be tracked
+  var feeds = [];
+
+  /**********************
+      PUBLIC MEMBERS
+  **********************/
+
+  // Returns the number of existing feeds
+  this.size = function() {
+    return feeds.length;
   };
 
-  this.feeds.addFeed = function(sr, type, cfg) {
-    if (sr.length === 0) {
+  // Returns all feeds
+  this.getAll = function() {
+    return feeds;
+  };
+
+  // Returns true if feeds empty
+  this.isEmpty = function() {
+    return feeds.length === 0;
+  };
+
+  // Adds a feed by its name and initial cfg options
+  // Returns feed if successfully added, false otherwise
+  this.add = function(sr, cfg) {
+    if (typeof(sr) === 'undefined' || sr.length === 0) {
       console.log('FEED NOT ADDED: No name specified.');
-      return;
+      return false;
     }
 
-    var feedExists = this.filter(function(feed) {
-      return feed.sr === sr;
-    }).length !== 0;
-    if (feedExists) {
+    if (feedExists(sr)) {
       console.log('FEED NOT ADDED: Feed already exists.');
-      return;
+      return false;
     }
     
-    this.push(new Feed(sr, type, cfg));
+    var feed = new Feed(sr, cfg);
+
+    // Update feed as soon as it's added
+    feed.update();
+    
+    feeds.push(feed);
+    console.log('FEED ADDED:', sr);
+    return feed;
   };
 
-  this.feeds.deleteFeed = function(feed) {
-    this.splice(this.indexOf(feed), 1);
+  // Deletes a feed by its subreddit name.
+  // Returns true if successfully deleted feed, false otherwise.
+  this.delete = function(sr) {
+    if (typeof(sr) === 'undefined' || sr.length === 0) {
+      console.log('FEED NOT REMOVED: No name specified.');
+      return false;
+    }
+
+    if (!feedExists(sr)) {
+      console.log('FEED NOT REMOVED: Feed does not exist');
+      return false;
+    }
+
+    feeds = feeds.filter(function(feed) {
+      return feed.sr !== sr;
+    });
+    console.log('FEED REMOVED:', sr);
   };
-});
+
+  this.clear = function() {
+    feeds = [];
+  };
+}]);

@@ -7,3 +7,7 @@ node_modules
 dist
 .tmp
 .sass-cache
+
+# Sublime project settings
+*.sublime-project
+*.sublime-workspace
